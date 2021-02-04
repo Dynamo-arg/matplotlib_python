@@ -37,6 +37,10 @@ def ej1():
     # Utilizar comprension de listas para generar
     # y1, y2 e y3 basado en los valores de x
 
+    y1 = [i**2 for i in x]
+    y2 = [i**3 for i in x]
+    y3 = [i**4 for i in x]
+
     # Esos tres gráficos deben estar colocados
     # en la diposición de 3 filas y 1 columna:
     # ------
@@ -55,6 +59,30 @@ def ej1():
     # Cada gráfico realizarlo con un color distinto
     # a su elección
 
+    gs = gridspec.GridSpec(3, 1)    
+    fig = plt.figure("Ejercicio 1")
+    ax1 = fig.add_subplot(gs[0, 0])  
+    ax2 = fig.add_subplot(gs[1, 0])  
+    ax3 = fig.add_subplot(gs[2, 0])  
+
+    ax1.plot(y1, color='darkgreen', label='(X al cuadrado)')
+    ax1.set_facecolor('whitesmoke')
+    ax1.legend()
+    ax1.grid('solid')
+
+    ax2.plot(y2, color='r', label='(X al cubo)')
+    ax2.set_facecolor('grey')
+    ax2.legend()
+    ax2.grid('solid')
+
+    ax3.plot(y3, color='blue', label='(X a la cuarta)')
+    ax3.set_facecolor('white')
+    ax3.legend()
+    ax3.grid('solid')
+
+
+    plt.show()
+
 
 def ej2():
     # Scatter Plot
@@ -69,6 +97,9 @@ def ej2():
     # Utilizar los métodos de Numpy para calcular
     # "y1" y "y2" basado en los valores de x
 
+    y1 = [np.sin(i) for i in x]
+    y2 = [np.cos(i) for i in x]
+    
     # Esos dos gráficos deben estar colocados
     # en la diposición de 1 fila y 2 columnas:
     # ------
@@ -82,6 +113,25 @@ def ej2():
 
     # Cada gráfico realizarlo con un mark distinto
     # a su elección.
+
+    gs = gridspec.GridSpec(1, 2)    
+    fig = plt.figure("Ejercicio 2")
+    ax1 = fig.add_subplot(gs[0, 0])  
+    ax2 = fig.add_subplot(gs[0, 1])  
+
+    ax1.scatter(x,y1, color='darkgreen', marker='+', label='y1 = sin(x)')
+    ax1.set_facecolor('whitesmoke')
+    ax1.legend()
+    ax1.grid('solid')
+
+    ax2.scatter(x,y2, color='r', marker='1',label='y1 = cos(x)')
+    ax2.set_facecolor('white')
+    ax2.legend()
+    ax2.grid('solid')
+
+    plt.show()
+
+
 
 
 def ej3():
@@ -99,6 +149,20 @@ def ej3():
     # Se debe colocar título al gráfico.
     # Se debe cambiar la grilla y el fondo a su elección.
 
+    width = 0.2  # Tamaño de la barra
+    fig = plt.figure("Ejercicio 3")
+    fig.suptitle('Lenguajes', fontsize=16)
+    ax = fig.add_subplot()
+
+    ax.bar(lenguajes, performance, 
+            width=0.5, color=['red', 'blue', 'purple', 'green', 'grey', 'gold'],
+            label='Lenguajes')
+    ax.set_facecolor('white')
+    ax.legend()
+    ax.set_xticks(lenguajes)
+    ax.set_xticklabels(lenguajes)
+    plt.show()
+
 
 def ej4():
     # Pie Plot
@@ -110,11 +174,22 @@ def ej4():
                      'C#': 8.2, 'C': 5.9
                      }
 
+
     # El gráfico debe tener usar como label las keys del diccionario,
     # debe usar como datos los values del diccionario
     # Se desea resaltar (explode) el dato de Python
     # Se desea mostrar en el gráfico los porcentajes de c/u
     # Se debe colocar un título al gráfico
+
+    fig = plt.figure()
+    fig.suptitle('Uso de Lenguajes', fontsize=16)
+    ax = fig.add_subplot()
+    ax.pie([str(v) for v in uso_lenguajes], labels=[float(k) for k in uso_lenguajes],
+           autopct=None)
+    ax.axis('equal')
+    plt.show()
+
+
 
 
 def ej5():
@@ -157,8 +232,8 @@ def ej5():
 
 if __name__ == '__main__':
     print("Bienvenidos a otra clase de Inove con Python")
-    ej1()
-    # ej2()
-    # ej3()
-    # ej4()
+    #ej1()
+    #ej2()
+    #ej3()
+    ej4()
     # ej5()
