@@ -11,7 +11,7 @@ Programa creado para poner a prueba los conocimientos
 adquiridos durante la clase
 '''
 
-__author__ = "Inove Coding School"
+__author__ = "Sebastian Volpe"
 __email__ = "alumnos@inove.com.ar"
 __version__ = "1.1"
 
@@ -40,6 +40,15 @@ def ej1():
     # Colocar la leyenda y el label con el nombre de la función
     # Darle color a la línea a su elección
 
+    fig = plt.figure("Ejercicio 1")
+    fig.suptitle('Graficar "Y" dependiente de "X"', fontsize=14)
+    ax = fig.add_subplot()
+    ax.plot(x,y, c='r', marker='^', label='y=x**2')
+    ax.legend()
+    ax.grid()
+    ax.set_facecolor('whitesmoke')
+    plt.show()
+
 
 def ej2():
     # Line Plot
@@ -64,6 +73,21 @@ def ej2():
 
     # Cada función dibujarla con un color distinto
     # a su elección
+    fig = plt.figure("Ejercicio 2")
+    gs = gridspec.GridSpec(1, 2)
+    ax1 = fig.add_subplot(gs[0, 0])  # row 0, col 0
+    ax2 = fig.add_subplot(gs[0, 1])  # row 0, col 1
+    ax1.plot(y1, color='darkgreen', label='y1 = x**2')
+    ax1.set_facecolor('whitesmoke')
+    ax1.legend()
+    ax1.grid('solid')
+
+    ax2.plot(y2,  color='darkblue', label='y2 = x**3')
+    ax2.set_facecolor('whitesmoke')
+    ax2.legend()
+    ax2.grid('solid')
+
+    plt.show()
 
 
 def ej3():
@@ -84,6 +108,14 @@ def ej3():
     # cada gráfico
 
     # Elegir un marker a elección
+    fig = plt.figure("Ejercicio 3")
+    fig.suptitle('tangente hiperbólica', fontsize=16)
+    ax1 = fig.add_subplot()
+    ax1.scatter(x, y, c='darkred', marker='^',  label='y=x**2')
+    ax1.legend()
+    ax1.set_facecolor('whitesmoke')
+    ax1.grid('solid')
+    plt.show()
 
 
 def ej4():
@@ -123,11 +155,45 @@ def ej4():
 
     # Colocar una grilla a elección
 
+    gs = gridspec.GridSpec(2, 2)     # (row, col)
+    fig = plt.figure("Ejercicio 4")
+    ax1 = fig.add_subplot(gs[0, 0])  
+    ax2 = fig.add_subplot(gs[0, 1])  
+    ax3 = fig.add_subplot(gs[1, 0])  
+    ax4 = fig.add_subplot(gs[1, 1])
+
+    ax1.plot(y1, color='darkgreen', label='(X al cuadrado)')
+    ax1.set_facecolor('whitesmoke')
+    ax1.legend()
+    ax1.grid('solid')
+
+    ax2.plot(y2, color='r', label='(X al cubo)')
+    ax2.set_facecolor('whitesmoke')
+    ax2.legend()
+    ax2.grid('solid')
+
+    ax3.plot(y3, color='blue', label='(X a la cuarta)')
+    ax3.set_facecolor('whitesmoke')
+    ax3.legend()
+    ax3.grid('solid')
+
+    ax4.plot(y4, color='darkcyan', label='raiz_cuadrada(X)')
+    ax4.set_facecolor('whitesmoke')
+    ax4.legend()
+    ax4.grid('solid')
+
+    plt.show()
+
+
+
+
+
+
+
 
 if __name__ == '__main__':
     print("Bienvenidos a otra clase de Inove con Python")
     ej1()
-    # ej2()
-    # ej2()
-    # ej3()
-    # ej4()
+    ej2()
+    ej3()
+    ej4()
