@@ -3,7 +3,7 @@
 Matplotlib [Python]
 Ejercicios de profundización
 ---------------------------
-Autor: Inove Coding School
+Autor: Sebastian Volpe
 Version: 1.2
 
 Descripcion:
@@ -14,6 +14,14 @@ adquiridos durante la semana
 __author__ = "Inove Coding School"
 __email__ = "alumnos@inove.com.ar"
 __version__ = "1.2"
+
+import math
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.axes
+import matplotlib.gridspec as gridspec
+import mplcursors
+import csv
 
 
 '''
@@ -93,6 +101,21 @@ def ej1():
     y = mes_1[:, 2]
 
     '''
+    dataset = np.genfromtxt('ventas.csv', delimiter=',')
+    dataset = dataset[1:,:]
+    filas_mes_1 = dataset[:, 0] == 1
+    x = dataset[filas_mes_1, :]
+    y = x[:, 2]
+    
+    fig = plt.figure()
+    fig.suptitle('Ventas Enero Alimentos', fontsize=14)
+    ax = fig.add_subplot()
+
+    ax.plot(y, c='darkred', marker='^', ms=10, label='Ventas Enero')
+    ax.legend()
+    ax.grid()
+    ax.set_facecolor('whitesmoke')
+    plt.show()
 
 
 def ej2():
@@ -121,6 +144,19 @@ def ej2():
     plot(tendencia)
 
     '''
+    dataset = np.genfromtxt('ventas.csv', delimiter=',')
+    dias = dataset[:, 2]
+    tendencia = np.diff(dias)
+    
+    fig = plt.figure()
+    fig.suptitle('Evolucion Ventas Alimentos Anual "X"', fontsize=14)
+    ax = fig.add_subplot()
+
+    ax.plot(tendencia, c='r', marker='.', ms=10, label='Evolucion')
+    ax.legend()
+    ax.grid()
+    ax.set_facecolor('whitesmoke')
+    plt.show()
 
 
 def ej3():
@@ -137,6 +173,23 @@ def ej3():
     ventas de electrodomésticos.
 
     '''
+    dataset = np.genfromtxt('ventas.csv', delimiter=',')
+    dataset = dataset[1:,:]
+
+    electro = dataset[:, 5] == 0
+
+    ventas_electro = [1 if x == False else 0 for x in electro]
+
+    fig = plt.figure()
+    fig.suptitle('Ventas Concretadas Electrodomesticos"', fontsize=14)
+    ax = fig.add_subplot()
+
+    ax.plot(ventas_electro, c='c', marker='.', ms=10, label='Evolucion')
+    ax.legend()
+    ax.grid()
+    ax.set_facecolor('whitesmoke')
+    plt.show()
+
 
 
 def ej4():
@@ -159,6 +212,22 @@ def ej4():
     para visualizar que categoría facturó más en lo que va
     del año
     '''
+    dataset = np.genfromtxt('ventas.csv', delimiter=',')
+    dataset = dataset[1:,:]
+
+    Alimentos = np.sum(dataset[:,2])
+    Bazar = np.sum(dataset[:,3])
+    Limpieza = np.sum(dataset[:,4])
+    Electrodomesticos = np.sum(dataset[:,5])
+
+    y = np.array([Alimentos, Bazar, Limpieza, Electrodomesticos])
+    mylabels = ["Alimentos", "Bazar", "Limpieza", "Electrodomesticos"]
+    myexplode = [0, 0, 0, 0.2]
+
+    fig = plt.figure()
+    fig.suptitle('Ventas Anuales por producto', fontsize=16)
+    plt.pie(y, labels = mylabels, explode = myexplode, shadow = True)
+    plt.show() 
 
 
 def ej5():
@@ -184,11 +253,64 @@ def ej5():
     apilados o agrupados (a su elección)
     '''
 
+    dataset = np.genfromtxt('ventas.csv', delimiter=',')
+    dataset = dataset[1:,:]
+
+    # Cargo las 12 varialbles necesarias:
+    alimentos_mes_1 = [dataset[x,2] for x in range(0,90) if dataset[x,0] == 1]
+    alimentos_mes_2 = [dataset[x,2] for x in range(0,90) if dataset[x,0] == 2]
+    alimentos_mes_3 = [dataset[x,2] for x in range(0,90) if dataset[x,0] == 3]
+    bazar_mes_1 = [dataset[x,3] for x in range(0,90) if dataset[x,0] == 1]
+    bazar_mes_2 = [dataset[x,3] for x in range(0,90) if dataset[x,0] == 2]
+    bazar_mes_3 = [dataset[x,3] for x in range(0,90) if dataset[x,0] == 3]
+    limpieza_mes_1 = [dataset[x,4] for x in range(0,90) if dataset[x,0] == 1]
+    limpieza_mes_2 = [dataset[x,4] for x in range(0,90) if dataset[x,0] == 2]
+    limpieza_mes_3 = [dataset[x,4] for x in range(0,90) if dataset[x,0] == 3]
+    electro_mes_1 = [dataset[x,5] for x in range(0,90) if dataset[x,0] == 1]
+    electro_mes_2 = [dataset[x,5] for x in range(0,90) if dataset[x,0] == 2]
+    electro_mes_3 = [dataset[x,5] for x in range(0,90) if dataset[x,0] == 3]
+
+    # Los juntos todos en 3 Array
+
+    mes1 = [
+        np.sum(alimentos_mes_1), 
+        np.sum(bazar_mes_1),
+        np.sum(limpieza_mes_1),
+        np.sum(electro_mes_1)]
+
+    mes2 = [
+        np.sum(alimentos_mes_2), 
+        np.sum(bazar_mes_2),
+        np.sum(limpieza_mes_2),
+        np.sum(electro_mes_2)]
+
+    mes3 = [
+        np.sum(alimentos_mes_3), 
+        np.sum(bazar_mes_3),
+        np.sum(limpieza_mes_3),
+        np.sum(electro_mes_3)]
+
+
+    productos = ['Alimentos', 'Bazar', 'Limpieza', 'Electros']
+
+    fig, (ax1, ax2, ax3) = plt.subplots(1,3)
+    fig.suptitle('Ventas Mensuales x Productos:')
+
+    ax1.bar(productos,mes1, color = 'r')
+    ax2.bar(productos,mes2, color = 'g')
+    ax3.bar(productos,mes3, color = 'c')
+    ax1.set_xlabel('MES 1')
+    ax2.set_xlabel('MES 2')
+    ax3.set_xlabel('MES 3')
+    ax1.set_ylabel('CANTIDAD')
+            
+    plt.show()
+
 
 if __name__ == '__main__':
     print("Ejercicios de práctica")
-    ej1()
+    # ej1()
     # ej2()
     # ej3()
     # ej4()
-    # ej5()
+    ej5()
